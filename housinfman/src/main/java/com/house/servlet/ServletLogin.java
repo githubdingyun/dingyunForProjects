@@ -25,14 +25,11 @@ import java.util.List;
 public class ServletLogin extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SSMUtil.requestMapping(getClass(), req, resp);
-        super.service(req, resp);
+        SSMUtil.serviceMapping(getClass(), req, resp);
     }
 
-    private void userlogin(HttpServletRequest request, HttpServletResponse resp) throws IOException {
-
-
-
+    private void userlogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SSMUtil.requestMapping("admin",req, resp);
     }
 
     private void accountVerification(HttpServletRequest request, HttpServletResponse resp) throws IOException {

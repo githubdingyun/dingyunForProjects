@@ -42,7 +42,7 @@ public class UrlStitching {
     public static String columnTransform(String str) {
         String s1 = str.substring(0, str.lastIndexOf('_'));
         String s2 = str.substring(str.lastIndexOf('_')+1);
-        String s3 = s2.substring(0, 1).toUpperCase() + s2.substring(1);
+        String s3 = s2.substring(0, 1).toUpperCase() + s2.substring(1).toLowerCase();
         return s1+s3;
     }
 

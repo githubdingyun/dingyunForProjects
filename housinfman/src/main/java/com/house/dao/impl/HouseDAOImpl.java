@@ -2,6 +2,9 @@ package com.house.dao.impl;
 
 import com.house.dao.MyBatisBaseDao;
 import com.house.pojo.House;
+import com.house.tools.JDBCUtil;
+import com.house.tools.SSMUtil;
+import com.house.tools.SqlSeparate;
 
 import java.util.List;
 
@@ -34,6 +37,12 @@ public class HouseDAOImpl implements MyBatisBaseDao<House, Integer> {
     }
 
     public List<House> searchAll() {
-        return null;
+        String sql = SqlSeparate.getSql(getClass());
+        return JDBCUtil.dbDQLWithSQL(sql,House.class);
+
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new HouseDAOImpl().searchAll());
     }
 }

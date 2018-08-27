@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
+/**
+ * @author DinGYun
+ */
 public class SqlSeparate {
     /**
      * 在mybatis中是通过xml形式,我们这儿离也可以采用,
@@ -17,10 +20,10 @@ public class SqlSeparate {
     }
 
 
-
     /**
      * 动态代理实现对所有的dao实现sql自动注入和
      * 动态代理得到daoimpl
+     *
      * @param eClass
      * @param <E>
      */
@@ -57,7 +60,12 @@ public class SqlSeparate {
 
     }
 
-
+    /**
+     * 得到当前方法对应的sql
+     * @param eClass
+     * @param <E>
+     * @return
+     */
     public static <E> String getSql(Class<E> eClass) {
 
         //获取对应该dao的配置信息名

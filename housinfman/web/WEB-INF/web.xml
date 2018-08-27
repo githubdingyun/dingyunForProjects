@@ -7,14 +7,14 @@
         <welcome-file>./WEB-INF/pages/login.html</welcome-file>
     </welcome-file-list>
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/500.jsp</location>
-    </error-page>
+    <!--<error-page>-->
+        <!--<error-code>404</error-code>-->
+        <!--<location>/404.jsp</location>-->
+    <!--</error-page>-->
+    <!--<error-page>-->
+        <!--<error-code>500</error-code>-->
+        <!--<location>/500.jsp</location>-->
+    <!--</error-page>-->
 
     <servlet>
         <description>用户登录注册操作相关的管理</description>

@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,7 +104,7 @@
         </li>
     </ul>
     <div class="right-side">
-        <iframe name="pageBox" src="view/flats/list.jsp"></iframe>
+        <iframe name="pageBox" src="${pageContext.request.contextPath}/rect/queryAll"></iframe>
         <div class="footer">
             智游教育 ©2018 河南智游臻龙教育科技有限公司
         </div>

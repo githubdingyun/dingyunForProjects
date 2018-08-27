@@ -1,5 +1,6 @@
 package com.house.tools;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,7 +20,8 @@ import java.lang.reflect.Method;
 public class SSMUtil {
 
     /**
-     * 使用反射   实现对象自动转载
+     * 使用反射   实现对象自动从前端装载
+     *
      *
      * @param req
      * @param o
@@ -42,7 +44,7 @@ public class SSMUtil {
      * 使用反射完成方法名字和mapping的匹配，不同地址执行不同方法
      * 模仿框架中的requestMapping
      */
-    public static <E> void requestMapping(Class<E> class1, HttpServletRequest req, HttpServletResponse resp) {
+    public static <E> void serviceMapping(Class<E> class1, HttpServletRequest req, HttpServletResponse resp) {
         try {
             E OE = class1.newInstance();
             String requestURI = req.getRequestURI();
@@ -60,6 +62,7 @@ public class SSMUtil {
                     try {
                         method.setAccessible(true);
                         method.invoke(OE, req, resp);
+                        break;
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         e.printStackTrace();
                     }
@@ -92,5 +95,18 @@ public class SSMUtil {
         }
     }
 
+//    转发
+    public static void requestMapping(String string, HttpServletRequest req, HttpServletResponse resp) {
+
+        try {
+            String jspurl = UrlStitching.jspurl(string);
+            System.out.println("正在跳转到页面    :    "+jspurl);
+
+            req.getRequestDispatcher(jspurl).forward(req, resp);
+
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

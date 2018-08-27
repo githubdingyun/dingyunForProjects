@@ -1,5 +1,6 @@
 package com.house.servlet;
 
+import com.house.pojo.Rect;
 import com.house.tools.SSMUtil;
 import com.house.tools.UrlStitching;
 
@@ -23,8 +24,7 @@ import java.lang.reflect.Method;
 public class ServletRect extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SSMUtil.requestMapping(getClass(), req, resp);
-        super.service(req, resp);
+        SSMUtil.serviceMapping(getClass(), req, resp);
     }
 
 
@@ -44,10 +44,16 @@ public class ServletRect extends HttpServlet {
     }
 
     private void queryAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SSMUtil.requestMapping("view/deal/list",req, resp);
 
 
     }
 
 
+    private void hahah(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SSMUtil.responseBody("sssssssadfassasd--------------------------------",req, resp);
+        SSMUtil.getParameters(req,new Rect());
+
+    }
 
 }

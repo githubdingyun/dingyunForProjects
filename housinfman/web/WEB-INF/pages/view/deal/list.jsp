@@ -7,8 +7,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <base href="${pageContext.request.contextPath}/">
     <title>XX系统 - 房屋信息管理</title>
-    <link rel="stylesheet" href="p1-flats/css/main.css">
-    <link rel="stylesheet" href="p1-flats/lib/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/lib/font-awesome/css/font-awesome.css">
 </head>
 <body>
 <div class="box">
@@ -70,7 +70,7 @@
         </div>
     </div>
 </div>
-<script src="p1-flats/lib/jquery/jquery.js"></script>
+<script src="static/lib/jquery/jquery.js"></script>
 <script>
     function confirmDelete(id) {
         if (confirm("确定要删除码？")) {
