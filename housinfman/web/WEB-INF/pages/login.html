@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <base href="/h_tc9/">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body>
+<p th:text="${#httpServletRequest.getPathInfo()}" >namesss
 <div class="login">
     <img src="static/image/logo.png" alt="智游">
     <p>房屋管理系统</p>
@@ -20,6 +22,9 @@
         <div>
             <p class="error-message">可能出现的错误信息</p>
             <input type="submit" value="登录">
+        </div>
+        <div>
+            <input type="color" value="选择颜色">
         </div>
     </form>
 </div>

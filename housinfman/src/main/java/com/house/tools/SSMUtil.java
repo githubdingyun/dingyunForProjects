@@ -22,7 +22,6 @@ public class SSMUtil {
     /**
      * 使用反射   实现对象自动从前端装载
      *
-     *
      * @param req
      * @param o
      */
@@ -95,14 +94,20 @@ public class SSMUtil {
         }
     }
 
-//    转发
+    //    转发
     public static void requestMapping(String string, HttpServletRequest req, HttpServletResponse resp) {
 
         try {
-            String jspurl = UrlStitching.jspurl(string);
-            System.out.println("正在跳转到页面    :    "+jspurl);
+            if (string.matches("html")) {
+                req.getRequestDispatcher("WEB-INF/pages"+string).forward(req, resp);
 
-            req.getRequestDispatcher(jspurl).forward(req, resp);
+            } else {
+                String jspurl = UrlStitching.jspurl(string);
+                System.out.println("正在跳转到页面    :    " + jspurl);
+
+                req.getRequestDispatcher(jspurl).forward(req, resp);
+            }
+
 
         } catch (ServletException | IOException e) {
             e.printStackTrace();

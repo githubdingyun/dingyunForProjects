@@ -10,17 +10,30 @@ import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * @author DinGYun
+ * @author dingyun
  * 使用反射实现了mybatis的一些部分，让我们的代码更简洁：
  * 主要实现了查到数据库的数据自动封装到
  */
 public class JDBCUtil {
-    public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-    public static final String ROOT = "root";
-    public static final String PASSWORD = "root";
-    public static final String DB_NAME = "housinfman";
-    public static final String URL = "jdbc:mysql://127.0.0.1:3306/" + DB_NAME;
+
+//    不使用数据池
+//    public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+//    public static final String ROOT = "root";
+//    public static final String PASSWORD = "root";
+//    public static final String DB_NAME = "housinfman";
+//    public static final String URL = "jdbc:mysql://127.0.0.1:3306/" + DB_NAME;
+//    public static Connection getConnection() {
+//        Connection connection = null;
+//        try {
+//            Class.forName(DRIVER_NAME);
+//            connection = DriverManager.getConnection(URL, ROOT, PASSWORD);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return connection;
+//    }
 
     private static ComboPooledDataSource dataSource = null;
 
@@ -30,14 +43,14 @@ public class JDBCUtil {
         dataSource = new ComboPooledDataSource();
     }
 
-    public static DataSource getDataSource(){
+    public static DataSource getDataSource() {
         return dataSource;
     }
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
         Connection conn = tl.get();
         try {
-            if(conn == null){
+            if (conn == null) {
                 conn = dataSource.getConnection();
             }
         } catch (SQLException e) {
@@ -90,17 +103,6 @@ public class JDBCUtil {
         }
         return list;
     }
-
-//    public static Connection getConnection() {
-//        Connection connection = null;
-//        try {
-//            Class.forName(DRIVER_NAME);
-//            connection = DriverManager.getConnection(URL, ROOT, PASSWORD);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return connection;
-//    }
 
 
     public static boolean daDMLWithSQL(String sql, Object... objects) {

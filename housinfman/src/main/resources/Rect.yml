@@ -1,0 +1,6 @@
+deleteByPrimaryKey: delete from rect where r_id = ?
+insert: insert into rect (r_id, h_id, l_id, r_money, r_time, r_remark) values (?,?,?,?,?,?)
+insertSelective: insert into rect (r_id, h_id, l_id,r_money, r_time, r_remark) values (?,?,?,?,?,?)
+searchAll: select * from rect
+selectByPrimaryKey: select * from rectwhere r_id = ? ;
+updateByPrimaryKey: update rectset r_id = ?,h_id=?,l_id=?,r_money=?,r_time=?,r_remark=?
