@@ -6,32 +6,61 @@
     <base href="/h_tc9/">
     <title>房屋管理系统 - 登录页面</title>
     <link rel="stylesheet" href="static/css/index.css">
+    <!--<link rel="stylesheet" href="static/css/jquery.css">-->
+    <!--<link rel="stylesheet" href="static/css/bootstrap.css">-->
 </head>
 <body>
-<p th:text="${#httpServletRequest.getPathInfo()}" >namesss
-<div class="login">
-    <img src="static/image/logo.png" alt="智游">
-    <p>房屋管理系统</p>
-    <form action="login/userlogin" method="post">
-        <div>
-            <input type="text" id="username" name="username" value="" placeholder="请输入用户名">
-        </div>
-        <div>
-            <input type="password" id="password" name="password" value="" placeholder="请输入密码">
-        </div>
-        <div>
-            <p class="error-message">可能出现的错误信息</p>
-            <input type="submit" value="登录">
-        </div>
-        <div>
-            <input type="color" value="选择颜色">
-        </div>
-    </form>
+<p th:text="${#httpServletRequest.getPathInfo()}"></p>
+    <div class="login">
+        <img src="static/image/logo.png" alt="智游">
+<p>房屋管理系统</p>
+<form action="login/userlogin" method="post">
+    <div>
+        <input type="text" id="username" name="username" value="" placeholder="请输入用户名">
+    </div>
+    <div>
+        <input type="password" id="password" name="password" value="" placeholder="请输入密码">
+    </div>
+    <div>
+        <p class="error-message" id="err">可能出现的错误信息</p>
+        <input type="submit" value="登录">
+    </div>
+    <div>
+        <input type="color" value="选择颜色">
+    </div>
+</form>
 </div>
-<script>
+<!--<script type="text/javascript" src="static/js/bootstrap.js"></script>-->
+<script type="text/javascript" src="static/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
     if (window.top !== window) {
         window.top.location.reload();
     }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#username").blur(function () {
+            username = $("#username").text();
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: "ServletTest",
+                data: {"username": username},
+                success: function (result) {
+                    console.log(result);
+                    if (result === 'success') {
+                        console.log(result);
+                        $("#err").val("已经占用");
+
+                    } else {
+                        console.log(result);
+                        $("#err").val("可以登陆");
+                    }
+                }
+            });
+        });
+    })
+
 </script>
 </body>
 </html>

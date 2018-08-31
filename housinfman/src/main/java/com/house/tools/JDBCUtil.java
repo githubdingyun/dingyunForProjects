@@ -48,18 +48,28 @@ public class JDBCUtil {
     }
 
     public static Connection getConnection() {
-        Connection conn = tl.get();
         try {
-            if (conn == null) {
-                conn = dataSource.getConnection();
-            }
-        } catch (SQLException e) {
+            //获取
+            Connection conn = dataSource.getConnection();
+            tl.set(conn);//设置连接
+            return conn;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        tl.set(conn);
-        return conn;
+        return null;
     }
 
+    public static void close(Connection connection) {
+        Connection conn = tl.get();
+        tl.remove();
+        if(conn!=null) {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public static <E> List<E> dbDQLWithSQL(String sql, Class<E> class1, Object... objects) {
         Connection connection = getConnection();
         System.out.println("链接数据库成功");
@@ -85,10 +95,10 @@ public class JDBCUtil {
                 for (String name : names) {
                     Object value = set.getObject(name);
 //                    可以自己定义不同的翻译类来匹配不同的字符串
-                    name = UrlStitching.columnTransform(name);
 //                    注意这里是得到名字为数据库列名的field对象
 //                    可能名字不一样,但是相关
-//                    我们可以对字符串进行处理
+//                    我们可以对字符串进行处理   这里的filed是从列名  转换得到的!!!!
+                    name = UrlStitching.columnTransform(name);
                     Field field = class1.getDeclaredField(name);
                     field.setAccessible(true);
                     field.set(oE, value);
@@ -101,6 +111,7 @@ public class JDBCUtil {
         } finally {
             close(connection, ps, set);
         }
+        System.out.println(list);
         return list;
     }
 
@@ -130,13 +141,7 @@ public class JDBCUtil {
         }
     }
 
-    public static void close(Connection connection) {
-        try {
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public static void close(ResultSet set) {
         try {

@@ -9,51 +9,123 @@
     <title>XX系统 - 房屋信息管理</title>
     <link rel="stylesheet" href="static/css/main.css">
     <link rel="stylesheet" href="static/lib/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="static/css/fenye.css">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
 </head>
 <body>
 <div class="box">
     <h3>房屋信息管理</h3>
     <div class="actions">
         <div>
-            <a class="btn btn-primary" href="add.jsp">添加房屋信息</a>
+            <a class="btn btn-primary" href="house/addPage">添加房屋信息</a>
         </div>
     </div>
 
-    <table class="list">
-        <tr>
-            <th>序号</th>
-            <th>所属地区</th>
-            <th>所属小区</th>
-            <th>单元号</th>
-            <th>所属楼层</th>
-            <th>房间号</th>
-            <th>面积</th>
-            <th>朝向</th>
-            <th>限住人数</th>
-            <th>出租价格(元)</th>
-            <th>出租状态</th>
-            <th>操作</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>经开区</td>
-            <td>富田太阳城</td>
-            <td>2</td>
-            <td>10</td>
-            <td>1002</td>
-            <td>120</td>
-            <td>南北</td>
-            <td>3</td>
-            <td>2000</td>
-            <td>未出租</td>
-            <td>
-                <a class="fa fa-info" title="详情" href="detail.jsp"></a>
-                &nbsp;&nbsp;
-                <a class="fa fa-pencil" title="编辑" href="edit.jsp"></a>
-                &nbsp;&nbsp;
-                <a class="fa fa-remove" title="删除" href="#" onclick="confirmDelete(1)"></a>
-            </td>
-        </tr>
+    <table class="table table-striped table-bordered table-hover  table-condensed" >
+        <c:if test="${nowJsp eq 'house'}">
+            ${tableHouse}
+            <c:forEach items="${houseMessages}" var="houseMessage">
+                <tr>
+                    <td>${houseMessage.hId}</td>
+                    <td>${houseMessage.hAddress}</td>
+                    <td>${houseMessage.hFitment}</td>
+                    <td>${houseMessage.hRoomno}</td>
+                    <td>${houseMessage.hFloor}</td>
+                    <td>${houseMessage.hRoomno}</td>
+                    <td>${houseMessage.hArea}</td>
+                    <td>${houseMessage.hEstate}</td>
+                    <td>${houseMessage.hUnitnumber}</td>
+                    <td>${houseMessage.hPrice}</td>
+                    <td>${houseMessage.hStatus}</td>
+                    <td>
+                        <a class="fa fa-info" title="详情" href="${nowJsp}/detailPage"></a>
+                        &nbsp;&nbsp;
+                        <a class="fa fa-pencil" title="编辑" href="${nowJsp}/updatePage"></a>
+                        &nbsp;&nbsp;
+                        <a class="fa fa-remove" title="删除" href="${nowJsp}/delete" onclick="confirmDelete(1)"></a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${nowJsp eq 'less'}">
+            ${tableLess}
+
+            <c:forEach items="${lessMessages}" var="lessMessage">
+                <tr>
+                    <td>${lessMessage.hId}</td>
+                    <td>${lessMessage.hAddress}</td>
+                    <td>${lessMessage.hFitment}</td>
+                    <td>${lessMessage.hRoomno}</td>
+                    <td>${lessMessage.hFloor}</td>
+                    <td>${lessMessage.hRoomno}</td>
+                    <td>${lessMessage.hArea}</td>
+                    <td>${lessMessage.hEstate}</td>
+                    <td>${lessMessage.hUnitnumber}</td>
+                    <td>${lessMessage.hPrice}</td>
+                    <td>${lessMessage.hStatus}</td>
+                    <td>
+                        <a class="fa fa-info" title="详情" href="${nowJsp}/detailPage"></a>
+                        &nbsp;&nbsp;
+                        <a class="fa fa-pencil" title="编辑" href="${nowJsp}/updatePage"></a>
+                        &nbsp;&nbsp;
+                        <a class="fa fa-remove" title="删除" href="${nowJsp}/delete" onclick="confirmDelete(1)"></a>
+                    </td>
+                </tr>
+            </c:forEach>
+
+        </c:if>
+        <c:if test="${nowJsp eq 'rect'}">
+            ${tableRect}
+            <c:forEach items="${rectMessages}" var="rectMessage">
+                <tr>
+                    <td>${rectMessage.hId}</td>
+                    <td>${rectMessage.hAddress}</td>
+                    <td>${rectMessage.hFitment}</td>
+                    <td>${rectMessage.hRoomno}</td>
+                    <td>${rectMessage.hFloor}</td>
+                    <td>${rectMessage.hRoomno}</td>
+                    <td>${rectMessage.hArea}</td>
+                    <td>${rectMessage.hEstate}</td>
+                    <td>${rectMessage.hUnitnumber}</td>
+                    <td>${rectMessage.hPrice}</td>
+                    <td>${rectMessage.hStatus}</td>
+                    <td>
+                        <a class="fa fa-info" title="详情" href="${nowJsp}/detailPage"></a>
+                        &nbsp;&nbsp;
+                        <a class="fa fa-pencil" title="编辑" href="${nowJsp}/updatePage"></a>
+                        &nbsp;&nbsp;
+                        <a class="fa fa-remove" title="删除" href="${nowJsp}/delete" onclick="confirmDelete(1)"></a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${nowJsp eq 'hetong'}">
+            ${tableHetong}
+            <c:forEach items="${hetongMessages}" var="hetongMessage">
+                <tr>
+                    <td>${hetongMessage.hId}</td>
+                    <td>${hetongMessage.hAddress}</td>
+                    <td>${hetongMessage.hFitment}</td>
+                    <td>${hetongMessage.hRoomno}</td>
+                    <td>${hetongMessage.hFloor}</td>
+                    <td>${hetongMessage.hRoomno}</td>
+                    <td>${hetongMessage.hArea}</td>
+                    <td>${hetongMessage.hEstate}</td>
+                    <td>${hetongMessage.hUnitnumber}</td>
+                    <td>${hetongMessage.hPrice}</td>
+                    <td>${hetongMessage.hStatus}</td>
+                    <td>
+                        <a class="fa fa-info" title="详情" href="${nowJsp}/detailPage"></a>
+                        &nbsp;&nbsp;
+                        <a class="fa fa-pencil" title="编辑" href="${nowJsp}/updatePage"></a>
+                        &nbsp;&nbsp;
+                        <a class="fa fa-remove" title="删除" href="${nowJsp}/delete" onclick="confirmDelete(1)"></a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+
+
     </table>
     <div class="pager-info">
         <div>共有 1 条记录，第 1/1 页</div>
@@ -70,8 +142,10 @@
         </div>
     </div>
 </div>
-<script src="static/lib/jquery/jquery.js"></script>
-<script>
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap.js"></script>
+<script type="text/javascript" src="static/js/fenye.js"></script>
+<script type="text/javascript">
     function confirmDelete(id) {
         if (confirm("确定要删除码？")) {
             alert('发送删除请求，刷新页面（不要异步）');
@@ -79,5 +153,16 @@
         return false;
     }
 </script>
+<%--<script type="text/javascript">--%>
+    <%--$(document).ready(function () {--%>
+        <%--$.ajax({--%>
+            <%--url: "rect/queryAll",--%>
+            <%--dataType: "html",--%>
+            <%--success: function (result) {--%>
+                <%--alert(result);--%>
+            <%--}--%>
+        <%--});--%>
+    <%--})--%>
+<%--</script>--%>
 </body>
 </html>

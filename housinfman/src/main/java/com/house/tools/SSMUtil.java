@@ -5,9 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Date;
 
 /**
  * @author DinGYun
@@ -26,38 +28,74 @@ public class SSMUtil {
      * @param o
      */
     public static void getParameters(HttpServletRequest req, Object o) {
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("--------------------------正在获取前端属性自动装载到对象--------------------------------------");
+        System.out.println("----------------------------------------------------------------");
         Field[] declaredFields = o.getClass().getDeclaredFields();
         for (Field field : declaredFields
                 ) {
-            String parameter = req.getParameter(field.getName());
-            try {
-                //对此对象进行操作
-                field.set(o, parameter);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            String fieldName = field.getName();
+            System.out.print("正在获取属性" + "--------" + fieldName + "----------" + "到后端:\n");
+            String parameter = req.getParameter(fieldName);
+            Class<?> type = field.getType();
+            String simpleName = type.getSimpleName();
+            field.setAccessible(true);
+            if (parameter != null) {
+                System.out.printf("属性名为: %s, ----> 属性类型为%s ---->转入属性value:  %s\n", fieldName, simpleName, parameter);
+                try {
+                    if ("String".equals(simpleName)) {
+                        field.set(o, parameter);
+                    } else if ("Integer".equals(simpleName)) {
+                        Integer i = Integer.parseInt(parameter);
+                        field.set(o, i);
+                    } else if ("Double".equals(simpleName)) {
+                        Double parseDouble = Double.parseDouble(parameter);
+                        field.set(o, parseDouble);
+                    } else if ("Date".equals(simpleName)) {
+                        Date date = Date.valueOf(parameter);
+                        field.set(o, date);
+                    } else {
+                        System.out.println("---------------------------当前类型未考虑!!!!!-------------------------------------");
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                System.out.println("该属性为空,不装载");
             }
+            System.out.println("----------------------------------------------------------------");
+            System.out.println("----------------------------------------------------------------");
         }
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("--------------------------装载结束--------------------------------------");
+        System.out.println("----------------------------------------------------------------");
     }
+
 
     /**
      * 使用反射完成方法名字和mapping的匹配，不同地址执行不同方法
      * 模仿框架中的requestMapping
      */
     public static <E> void serviceMapping(Class<E> class1, HttpServletRequest req, HttpServletResponse resp) {
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("--------------------------正在对方法解析映射到request mapping (url)--------------------------------------");
+        System.out.println("----------------------------------------------------------------");
         try {
             E OE = class1.newInstance();
             String requestURI = req.getRequestURI();
             String endurl = UrlStitching.endurl(requestURI);
-            System.out.println("正在解析类:" + class1.getSimpleName());
+            String simpleName = class1.getSimpleName();
+            System.out.println("正在解析类:" + simpleName);
             Method[] declaredMethods = class1.getDeclaredMethods();
             for (Method method : declaredMethods
                     ) {
-                System.out.println("正在匹配方法名放到方法中:           " + method.getName());
+                System.out.println("正在匹配方法名     ---->>       " + method.getName());
 //                注意这里如果执行反射方法service时,因为反射会再执行service方法,会陷入死循环,服务器爆炸,
 //                所以注意了!!!!我们的方法输入url地址不能叫做service,如果叫做service,那么系统会崩溃
 //                所以对url进行处理,避免service
                 if (method.getName().equals(endurl) && !"service".equals(endurl)) {
-                    System.out.println(endurl);
+                    System.out.println("已经成功匹配方法   ---->>           " + endurl);
                     try {
                         method.setAccessible(true);
                         method.invoke(OE, req, resp);
@@ -68,9 +106,13 @@ public class SSMUtil {
                 }
 
             }
+            System.out.println("----------------------------------------------------------------");
+            System.out.println("--------------------------映射结束!!!--------------------------------------");
+            System.out.printf("              当前操作的servlet--->>   %s   当前url---->>   %s                \n\n\n", simpleName, requestURI);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -96,10 +138,14 @@ public class SSMUtil {
 
     //    转发
     public static void requestMapping(String string, HttpServletRequest req, HttpServletResponse resp) {
-
+        try {
+            req.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         try {
             if (string.matches("html")) {
-                req.getRequestDispatcher("WEB-INF/pages"+string).forward(req, resp);
+                req.getRequestDispatcher("WEB-INF/pages" + string).forward(req, resp);
 
             } else {
                 String jspurl = UrlStitching.jspurl(string);
@@ -107,7 +153,6 @@ public class SSMUtil {
 
                 req.getRequestDispatcher(jspurl).forward(req, resp);
             }
-
 
         } catch (ServletException | IOException e) {
             e.printStackTrace();

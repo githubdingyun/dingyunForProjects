@@ -60,6 +60,9 @@
 
     <div class="txtbox">
 
+        <%
+            request.getMethod();
+        %>
         <p>对不起，您请求的页面不存在、或已被删除、或暂时不可用</p>
 
         <p class="paddingbox">请点击以下链接继续浏览网页</p>
@@ -72,4 +75,11 @@
 
 </div>
 </body>
+<script  type="text/javascript">
+function sss() {
+
+    
+}
+    
+</script>
 </html>

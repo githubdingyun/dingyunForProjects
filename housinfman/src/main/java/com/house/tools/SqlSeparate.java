@@ -62,6 +62,7 @@ public class SqlSeparate {
 
     /**
      * 得到当前方法对应的sql
+     *
      * @param eClass
      * @param <E>
      * @return
