@@ -59,16 +59,16 @@ public class UserDAOImpl implements MyBatisBaseDao<User, Integer> {
     }
 
 
-    public Boolean userAuthentication() {
+    public Boolean userAuthentication(User record) {
         String sql = SqlSeparate.getSql(getClass());
-        List<User> users = JDBCUtil.dbDQLWithSQL(sql, User.class);
-        return !Objects.requireNonNull(users).isEmpty();
+        List<User> users = JDBCUtil.dbDQLWithSQL(sql, User.class,record.getuUsername(),record.getuPassword());
+        return !users.isEmpty();
 
     }
 
-    public Boolean accountVerification() {
+    public Boolean accountVerification(User record) {
         String sql = SqlSeparate.getSql(getClass());
-        List<User> users = JDBCUtil.dbDQLWithSQL(sql, User.class);
+        List<User> users = JDBCUtil.dbDQLWithSQL(sql, User.class,record.getuUsername());
         return !Objects.requireNonNull(users).isEmpty();
     }
 

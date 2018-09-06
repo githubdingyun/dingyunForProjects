@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <table class="table table-striped table-bordered table-hover  table-condensed" >
+    <table class="table table-striped table-bordered table-hover  table-condensed">
         <c:if test="${nowJsp eq 'house'}">
             ${tableHouse}
             <c:forEach items="${houseMessages}" var="houseMessage">
@@ -115,11 +115,12 @@
                     <td>${hetongMessage.hPrice}</td>
                     <td>${hetongMessage.hStatus}</td>
                     <td>
-                        <a class="fa fa-info" title="详情" href="${nowJsp}/detailPage"></a>
                         &nbsp;&nbsp;
                         <a class="fa fa-pencil" title="编辑" href="${nowJsp}/updatePage"></a>
                         &nbsp;&nbsp;
                         <a class="fa fa-remove" title="删除" href="${nowJsp}/delete" onclick="confirmDelete(1)"></a>
+                        <a class="fa fa-info" title="详情" href="${nowJsp}/detailPage"></a>
+
                     </td>
                 </tr>
             </c:forEach>
@@ -153,16 +154,21 @@
         return false;
     }
 </script>
-<%--<script type="text/javascript">--%>
-    <%--$(document).ready(function () {--%>
-        <%--$.ajax({--%>
-            <%--url: "rect/queryAll",--%>
-            <%--dataType: "html",--%>
-            <%--success: function (result) {--%>
-                <%--alert(result);--%>
-            <%--}--%>
-        <%--});--%>
-    <%--})--%>
-<%--</script>--%>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var var1;
+        var da;
+        $.ajax({
+            url: "house/hh",
+            dataType: "html",
+            success: function (result) {
+                var1 = result;
+                da = JSON.parse(var1);
+                alert(da);
+            }
+        });
+
+    })
+</script>
 </body>
 </html>

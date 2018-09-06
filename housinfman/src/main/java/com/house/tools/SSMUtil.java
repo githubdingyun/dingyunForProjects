@@ -40,7 +40,7 @@ public class SSMUtil {
             Class<?> type = field.getType();
             String simpleName = type.getSimpleName();
             field.setAccessible(true);
-            if (parameter != null) {
+            if (parameter != null && !parameter.equals("")) {
                 System.out.printf("属性名为: %s, ----> 属性类型为%s ---->转入属性value:  %s\n", fieldName, simpleName, parameter);
                 try {
                     if ("String".equals(simpleName)) {
@@ -129,7 +129,7 @@ public class SSMUtil {
             //输出的resp为中文
             resp.setContentType("text/html;charset=utf-8");
             PrintWriter respWriter = resp.getWriter();
-            respWriter.println(string);
+            respWriter.print(string);
             respWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

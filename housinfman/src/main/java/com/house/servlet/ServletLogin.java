@@ -1,19 +1,15 @@
 package com.house.servlet;
 
-import com.house.dao.impl.HouseDAOImpl;
 import com.house.dao.impl.UserDAOImpl;
-import com.house.pojo.House;
+import com.house.pojo.User;
 import com.house.tools.SSMUtil;
-import org.json.JSONArray;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author DinGYun
@@ -25,7 +21,7 @@ import java.util.List;
 public class ServletLogin extends HttpServlet {
     UserDAOImpl userDAO = new UserDAOImpl();
 
-    HouseDAOImpl houseDAO = new HouseDAOImpl();
+    private User user = new User();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,17 +30,18 @@ public class ServletLogin extends HttpServlet {
 
 
     private void userlogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-                SSMUtil.requestMapping("admin", req, resp);
+        SSMUtil.getParameters(req, user);
+        Boolean aBoolean = userDAO.userAuthentication(user);
+        if (aBoolean){
+            SSMUtil.requestMapping("admin", req, resp);
+        }
+        else SSMUtil.responseBody("fail", req, resp);
     }
 
     private void accountVerification(HttpServletRequest request, HttpServletResponse resp) throws IOException {
-        ServletContext servletContext = request.getServletContext();
-        servletContext.setAttribute("nowJsp", "house");
-        List<House> houses = houseDAO.searchAll();
-        request.setAttribute("houseMessages", houses);
-        JSONArray jsonArray =  new JSONArray();
-        JSONArray put = jsonArray.put(houses);
-        SSMUtil.responseBody(put.toString(),request, resp);
+        SSMUtil.getParameters(request, user);
+        Boolean aBoolean = userDAO.accountVerification(user);
+        SSMUtil.responseBody(aBoolean ? "success" : "fail", request, resp);
 
 
     }

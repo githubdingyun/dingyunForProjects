@@ -11,53 +11,124 @@
 </head>
 <body>
 <p th:text="${#httpServletRequest.getPathInfo()}"></p>
-    <div class="login">
-        <img src="static/image/logo.png" alt="智游">
-<p>房屋管理系统</p>
-<form action="login/userlogin" method="post">
-    <div>
-        <input type="text" id="username" name="username" value="" placeholder="请输入用户名">
-    </div>
-    <div>
-        <input type="password" id="password" name="password" value="" placeholder="请输入密码">
-    </div>
-    <div>
-        <p class="error-message" id="err">可能出现的错误信息</p>
-        <input type="submit" value="登录">
-    </div>
-    <div>
-        <input type="color" value="选择颜色">
-    </div>
-</form>
+<div class="login">
+    <img src="static/image/logo.png" alt="智游">
+    <p>房屋管理系统</p>
+    <form id="from-get" action="login/userlogin" method="post" onsubmit="return check_name();">
+        <div>
+            <input type="text" id="uUsername" name="uUsername" value="" placeholder="请输入用户名">
+        </div>
+        <div>
+            <input type="password" id="uPassword" name="uPassword" value="" placeholder="请输入密码">
+        </div>
+        <div id="" class="form-inline">
+            <label for="yzm"></label><input name="yzm" id="yzm" style="width: 45%; display: inline-block;" type="text">
+            <div id="v_container" style="width: 45%; height: 40px; float: right;">
+            </div>
+        </div>
+        <div>
+            <p class="error-message" id="err"></p>
+            <input id="submit" type="submit" style="" value="登录">
+        </div>
+
+        <div>
+            <label>
+                <input id="color" type="color" name="color">
+            </label>
+        </div>
+    </form>
 </div>
 <!--<script type="text/javascript" src="static/js/bootstrap.js"></script>-->
 <script type="text/javascript" src="static/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="static/js/gVerify.js"></script>
+<!--<script type="text/javascript" src="static/js/index.js"></script>-->
 <script type="text/javascript">
     if (window.top !== window) {
         window.top.location.reload();
     }
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#username").blur(function () {
-            username = $("#username").text();
+    $("#color").change(function () {
+        var color = $("#color").val();
+        color = "background:" + color;
+        $("#submit").prop("style", color)
+    });
+
+    // 事件绑定的原因是:  当移掉一些元素的时候,我们需要绑定元素才能让事件生效,否则不生效
+    // $("#color").on("change", function () {
+    //     var color = $("#color").val();
+    //     color = "background:" + color;
+    //     $("#submit").prop("style", color)
+    // });
+
+</script>
+<script type="text/javascript">
+    function check_name() {
+        var flag = true;
+        var flag1 = true;
+        var flag2 = true;
+        var data = $("#from-get").serialize();
+
+        $.ajax({
+            url: "login/userlogin",
+            data: data,
+            success: function (result) {
+                if (result === 'fail') {
+                    flag1 = false;
+                }
+            }
+        });
+        yzm = $("#yzm").val();
+        if (!verifyCode.validate(yzm)) {
+            $("#err").text("验证码错误");
+            flag2 = false;
+        }
+        if (flag1 === false) {
+            $("#err").text("账号密码错误");
+        }
+        return (flag1 && flag2);
+    }
+</script>
+<script type="text/javascript">
+    $(function () {
+        verifyCode = new GVerify("v_container");
+
+        $("#yzm").blur(function () {
+            yzm = $("#yzm").val();
+            if (!verifyCode.validate(yzm)) {
+                $("#err").text("验证码错误");
+            } else {
+                $("#err").text("");
+            }
+        });
+
+
+        $("#uUsername").blur(function () {
+            uUsername = $("#uUsername").val();
+
+
             $.ajax({
                 type: "POST",
-                dataType: "html",
-                url: "ServletTest",
-                data: {"username": username},
+                dataType: "text",
+                url: "login/accountVerification",
+                data: {"uUsername": uUsername},
                 success: function (result) {
-                    console.log(result);
                     if (result === 'success') {
-                        console.log(result);
-                        $("#err").val("已经占用");
+                        $("#err").text("");
+
 
                     } else {
-                        console.log(result);
-                        $("#err").val("可以登陆");
+                        $("#err").text("账号不存在");
+                        // location.reload("#");
                     }
                 }
             });
+            // var yzm=$("#yzm table").val();
+            // alert(yzm);
+            // if(!verifyCode.validate(yzm))
+            // {
+            //     $("#err").text("验证码错误ll");
+            // }
         });
     })
 

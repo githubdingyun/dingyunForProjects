@@ -21,7 +21,6 @@ public class ServletLessee extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SSMUtil.serviceMapping(getClass(), req, resp);
-        super.service(req, resp);
     }
 
     private void add(HttpServletRequest request, HttpServletResponse resp) {

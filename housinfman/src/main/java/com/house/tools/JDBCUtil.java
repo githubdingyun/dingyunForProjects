@@ -62,7 +62,7 @@ public class JDBCUtil {
     public static void close(Connection connection) {
         Connection conn = tl.get();
         tl.remove();
-        if(conn!=null) {
+        if (conn != null) {
             try {
                 conn.close();
             } catch (Exception e) {
@@ -70,6 +70,7 @@ public class JDBCUtil {
             }
         }
     }
+
     public static <E> List<E> dbDQLWithSQL(String sql, Class<E> class1, Object... objects) {
         Connection connection = getConnection();
         System.out.println("链接数据库成功");
@@ -81,6 +82,8 @@ public class JDBCUtil {
             for (int i = 1; i <= objects.length; i++) {
                 Object o = objects[i - 1];
                 ps.setObject(i, o);
+                System.out.println("转载了对象" + o);
+
             }
 //            获取数据库列名中放到names中
             ResultSetMetaData data = ps.getMetaData();
@@ -140,7 +143,6 @@ public class JDBCUtil {
             e.printStackTrace();
         }
     }
-
 
 
     public static void close(ResultSet set) {

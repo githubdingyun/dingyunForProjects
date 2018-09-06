@@ -24,7 +24,6 @@ public class ServletHouse extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SSMUtil.serviceMapping(getClass(), req, resp);
-        super.service(req, resp);
     }
 
     private void add(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
@@ -69,6 +68,11 @@ public class ServletHouse extends HttpServlet {
 
     private void updatePage(HttpServletRequest request, HttpServletResponse resp) {
         SSMUtil.requestMapping("view/flats/edit", request, resp);
+    }
+
+    private void hh(HttpServletRequest request, HttpServletResponse resp) {
+        List<House> houses = houseDAO.searchAll();
+        SSMUtil.responseBody(houses.toString(), request, resp);
     }
 
 

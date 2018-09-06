@@ -9,6 +9,12 @@ import java.io.IOException;
 
 @WebServlet("/ServletTest")
 public class ServletTest extends HttpServlet {
+//
+//    @Override
+//    public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.getRequestDispatcher("/WEB-INF/pages/view/flats/list.jsp").forward(req, resp);
+//    }
+
     @Override
     public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.service(req, resp);
@@ -24,6 +30,6 @@ public class ServletTest extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       doPost(req, resp);
+        doPost(req, resp);
     }
 }

@@ -9,7 +9,7 @@
     <title>${xx}系统 - 后台管理</title>
     <link rel="stylesheet" href="static/css/admin.css">
     <link rel="stylesheet" href="static/lib/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <%--<link rel="stylesheet" href="static/css/bootstrap.css">--%>
 </head>
 <body>
 <div class="header">
@@ -34,6 +34,7 @@
         <a href="#">${sessionScope.username}用户</a>
         <a href="login/logout">退出</a>
     </div>
+
 </div>
 <div class="main">
     <ul class="left-side">
