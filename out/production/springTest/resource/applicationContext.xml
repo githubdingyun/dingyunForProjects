@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--约束文件  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+    <description>采用引用式的方法传入参数</description>
+
+    <util:list id="langList">
+        <value>java</value>
+        <value>php</value>
+        <value>UI</value>
+        <value>LD</value>
+    </util:list>
+    <util:set id="langSet">
+        <value>上海</value>
+        <value>北京</value>
+        <value>中国</value>
+    </util:set>
+    <util:map id="langMap">
+        <entry key="李丹" value="99"></entry>
+        <entry key="22" value="22"></entry>
+        <entry key="222" value="11"></entry>
+        <entry key="33" value="11"></entry>
+    </util:map>
+    <util:properties id="langProperties">
+        <prop key="111">zzz</prop>
+        <prop key="222">zzsz</prop>
+        <prop key="1331">xzz</prop>
+    </util:properties>
+
+    <bean id="msg2" class="src.com.dingyun.MessageBean">
+        <property name="cities" ref="langSet"/>
+        <property name="langs" ref="langList"/>
+        <property name="properties" ref="langProperties"/>
+        <property name="score" ref="langMap"/>
+    </bean>
+
+
+    <bean id="computer" class="src.com.dingyun.Computer">
+        <property name="mainboard" value="技嘉"/>
+        <property name="hdd" value="希捷"/>
+        <property name="ram" value="金士顿"/>
+    </bean>
+    <!--注入参数值  -->
+    <bean id="msg" class="src.com.dingyun.MessageBean">
+        <property name="name">
+            <value>张三</value>
+        </property>
+        <property name="age" value="18"/>
+
+        <!-- 注入bean对象 ref="computer"的computer是前面的id-->
+        <property name="computer" ref="computer"/>
+
+        <!--注入集合  -->
+        <!-- List -->
+        <property name="langs">
+            <list>
+                <value>JAVA</value>
+                <value>UI</value>
+                <value>PHP</value>
+            </list>
+        </property>
+        <!-- Set -->
+        <property name="cities">
+            <set>
+                <value>北京</value>
+                <value>上海</value>
+                <value>杭州</value>
+            </set>
+        </property>
+        <!-- Map -->
+        <property name="score">
+            <map>
+                <entry key="bigdata12" value="99"/>
+                <entry key="bigdata16" value="88"/>
+                <entry key="bigdata20" value="96"/>
+            </map>
+        </property>
+        <!-- Properties文件 -->
+        <property name="properties">
+            <props>
+                <prop key="user">zhangsan</prop>
+                <prop key="password">123456</prop>
+            </props>
+        </property>
+
+
+    </bean>
+
+
+    <util:properties id="const" location="const.properties"/>
+
+
+    <!--<description>注入表达式的用法</description>-->
+
+    <bean id="demo" class="src.com.dingyun.DemoBean">
+        <property name="lang" value="#{msg2.langs[0]}"/>
+        <property name="name" value="#{msg2.langs[0]}"/>
+        <property name="score" value="#{msg2.langs[0]}"/>
+        <property name="pageSize" value="#{const.page_size}"/>
+    </bean>
+
+</beans>
