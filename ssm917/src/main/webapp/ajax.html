@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="font-size: 30px">
+<a href="javascript:alert(getXhr())">Click me</a>
+<div style="border: #540789;margin-left: 500px;">
+    <form action="regist.do" method="post">
+        用户名:<label for="username"></label><input id="username" name="usrname" onblur="clerk_uname()"><br>
+        密码:<label for="password"></label><input id="password" name="password" type="password"><br>
+        <input type="submit" value="注册"><br>
+        <span id="msg"></span>
+
+    </form>
+</div>
+
+
+</body>
+<script type="text/javascript">
+    // 封装js   类似jquery
+    //方法$用于获取传入id的dom对象
+    function
+    $(id) {
+        return document.getElementById(id);
+    }
+
+    function $F(id) {
+        return $(id).value;
+
+    }
+
+    //封装获取的ajax对象
+    function getXhr() {
+        var xhr = null;
+        if (window.XMLHttpRequest) {
+            //非ie
+            xhr = new XMLHttpRequest();
+        }
+        else {
+            //ieli==浏览器
+            xhr = new ActiveXObject("Microsoft.XMLHttp");
+        }
+        return xhr;
+    }
+
+    function clerk_uname() {
+        //ajax 异步请求
+        //step1:获取ajax对象
+        var xhr = getXhr();
+        //step2:利用ajax对象发送请求
+        xhr.open('get', "userAuthentication.do?username=" + $F('username'), true);
+
+        //step4;处理响应结果
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var txt = xhr.responseText;
+                //domc操作
+                $('msg').innerHTML = txt;
+            }
+
+        };
+        //step3:发送请求
+        xhr.send(null);
+
+
+    }
+    // function clerk_uname() {
+    //     //ajax 异步请求
+    //     //step1:获取ajax对象
+    //     var xhr = getXhr();
+    //     //step2:利用ajax对象发送请求
+    //     xhr.open('post', "userAuthentication.do", true);
+    //     xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+    //     //step4;处理响应结果
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState == 4 && xhr.status == 200) {
+    //             var txt = xhr.responseText;
+    //             //domc操作
+    //             $('msg').innerHTML = txt;
+    //         }
+    //     };
+    //     //step3:发送请求
+    //     xhr.send(username=$F('username'));
+    //
+    //
+    //
+    //
+    // }
+
+</script>
+</html>

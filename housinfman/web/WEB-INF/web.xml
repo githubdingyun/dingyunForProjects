@@ -3,76 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <welcome-file-list>
-        <welcome-file>./WEB-INF/pages/login.html</welcome-file>
-    </welcome-file-list>
-
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
     <listener>
-        <description>系统初始化工作</description>
-        <listener-class>com.house.listener.SystemInitListener</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
-    <!--<error-page>-->
-    <!--<error-code>404</error-code>-->
-    <!--<location>/404.jsp</location>-->
-    <!--</error-page>-->
-    <!--<error-page>-->
-    <!--<error-code>500</error-code>-->
-    <!--<location>/500.jsp</location>-->
-    <!--</error-page>-->
-
-    <!--如果有多个过滤器存在,则按照过滤器顺序执行-->
-
-    <filter>
-        <filter-name>codeFilter</filter-name>
-        <filter-class>com.house.filter.CodeFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>codeFilter</filter-name>
-        <url-pattern>/rect/*</url-pattern>
-        <!--<url-pattern>/*</url-pattern>-->
-    </filter-mapping>
-
-
     <servlet>
-        <description>用户登录注册操作相关的管理</description>
-        <servlet-name>servletLogin</servlet-name>
-        <servlet-class>com.house.servlet.ServletLogin</servlet-class>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>servletLogin</servlet-name>
-        <url-pattern>/login/*</url-pattern>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.form</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <description>house相关的管理</description>
-        <servlet-name>servletHouse</servlet-name>
-        <servlet-class>com.house.servlet.ServletHouse</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>servletHouse</servlet-name>
-        <url-pattern>/house/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <description>lessee相关的管理</description>
-        <servlet-name>ServletLessee</servlet-name>
-        <servlet-class>com.house.servlet.ServletLessee</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ServletLessee</servlet-name>
-        <url-pattern>/lessee/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <description>rect相关的管理</description>
-        <servlet-name>ServletRect</servlet-name>
-        <servlet-class>com.house.servlet.ServletRect</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ServletRect</servlet-name>
-        <url-pattern>/rect/*</url-pattern>
-    </servlet-mapping>
-
-
 </web-app>

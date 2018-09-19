@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingyun.dao.UserDao" >
+
+    <resultMap id="map" type="com.dingyun.entry.User">
+        <id column="u_id" property="uId" jdbcType="INTEGER" />
+        <result column="u_name" property="uName" jdbcType="VARCHAR" />
+        <result column="u_password" property="uPassword" jdbcType="VARCHAR" />
+        <result column="u_status" property="uStatus" jdbcType="VARCHAR" />
+        <result column="u_tel" property="uTel" jdbcType="VARCHAR" />
+        <result column="u_username" property="uUsername" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="findAll" resultMap="map">
+        select * from user
+    </select>
+
+</mapper>

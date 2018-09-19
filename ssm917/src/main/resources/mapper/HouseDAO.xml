@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsg.dao.HouseDAO">
+  <resultMap id="BaseResultMap" type="com.lsg.model.House">
+    <id column="h_id" jdbcType="INTEGER" property="hId" />
+    <result column="h_area" jdbcType="VARCHAR" property="hArea" />
+    <result column="h_estate" jdbcType="VARCHAR" property="hEstate" />
+    <result column="h_unitNumber" jdbcType="VARCHAR" property="hUnitnumber" />
+    <result column="h_floor" jdbcType="INTEGER" property="hFloor" />
+    <result column="h_roomNo" jdbcType="VARCHAR" property="hRoomno" />
+    <result column="h_acreage" jdbcType="VARCHAR" property="hAcreage" />
+    <result column="h_direction" jdbcType="VARCHAR" property="hDirection" />
+    <result column="h_fitment" jdbcType="VARCHAR" property="hFitment" />
+    <result column="h_isDoubleAir" jdbcType="BIT" property="hIsdoubleair" />
+    <result column="h_limit" jdbcType="INTEGER" property="hLimit" />
+    <result column="h_facility" jdbcType="VARCHAR" property="hFacility" />
+    <result column="h_price" jdbcType="DOUBLE" property="hPrice" />
+    <result column="h_status" jdbcType="INTEGER" property="hStatus" />
+    <result column="h_img" jdbcType="VARCHAR" property="hImg" />
+    <result column="h_address" jdbcType="VARCHAR" property="hAddress" />
+    <result column="h_addtime" jdbcType="TIMESTAMP" property="hAddtime" />
+    <result column="h_updateTime" jdbcType="TIMESTAMP" property="hUpdatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    h_id, h_area, h_estate, h_unitNumber, h_floor, h_roomNo, h_acreage, h_direction, 
+    h_fitment, h_isDoubleAir, h_limit, h_facility, h_price, h_status, h_img, h_address, 
+    h_addtime, h_updateTime
+  </sql>
+  <select id="selectByExample" parameterType="com.lsg.model.HouseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from house
+    where h_id = #{hId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from house
+    where h_id = #{hId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lsg.model.HouseExample">
+    delete from house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lsg.model.House">
+    insert into house (h_id, h_area, h_estate, 
+      h_unitNumber, h_floor, h_roomNo, 
+      h_acreage, h_direction, h_fitment, 
+      h_isDoubleAir, h_limit, h_facility, 
+      h_price, h_status, h_img, 
+      h_address, h_addtime, h_updateTime
+      )
+    values (#{hId,jdbcType=INTEGER}, #{hArea,jdbcType=VARCHAR}, #{hEstate,jdbcType=VARCHAR}, 
+      #{hUnitnumber,jdbcType=VARCHAR}, #{hFloor,jdbcType=INTEGER}, #{hRoomno,jdbcType=VARCHAR}, 
+      #{hAcreage,jdbcType=VARCHAR}, #{hDirection,jdbcType=VARCHAR}, #{hFitment,jdbcType=VARCHAR}, 
+      #{hIsdoubleair,jdbcType=BIT}, #{hLimit,jdbcType=INTEGER}, #{hFacility,jdbcType=VARCHAR}, 
+      #{hPrice,jdbcType=DOUBLE}, #{hStatus,jdbcType=INTEGER}, #{hImg,jdbcType=VARCHAR}, 
+      #{hAddress,jdbcType=VARCHAR}, #{hAddtime,jdbcType=TIMESTAMP}, #{hUpdatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lsg.model.House">
+    insert into house
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hId != null">
+        h_id,
+      </if>
+      <if test="hArea != null">
+        h_area,
+      </if>
+      <if test="hEstate != null">
+        h_estate,
+      </if>
+      <if test="hUnitnumber != null">
+        h_unitNumber,
+      </if>
+      <if test="hFloor != null">
+        h_floor,
+      </if>
+      <if test="hRoomno != null">
+        h_roomNo,
+      </if>
+      <if test="hAcreage != null">
+        h_acreage,
+      </if>
+      <if test="hDirection != null">
+        h_direction,
+      </if>
+      <if test="hFitment != null">
+        h_fitment,
+      </if>
+      <if test="hIsdoubleair != null">
+        h_isDoubleAir,
+      </if>
+      <if test="hLimit != null">
+        h_limit,
+      </if>
+      <if test="hFacility != null">
+        h_facility,
+      </if>
+      <if test="hPrice != null">
+        h_price,
+      </if>
+      <if test="hStatus != null">
+        h_status,
+      </if>
+      <if test="hImg != null">
+        h_img,
+      </if>
+      <if test="hAddress != null">
+        h_address,
+      </if>
+      <if test="hAddtime != null">
+        h_addtime,
+      </if>
+      <if test="hUpdatetime != null">
+        h_updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hId != null">
+        #{hId,jdbcType=INTEGER},
+      </if>
+      <if test="hArea != null">
+        #{hArea,jdbcType=VARCHAR},
+      </if>
+      <if test="hEstate != null">
+        #{hEstate,jdbcType=VARCHAR},
+      </if>
+      <if test="hUnitnumber != null">
+        #{hUnitnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="hFloor != null">
+        #{hFloor,jdbcType=INTEGER},
+      </if>
+      <if test="hRoomno != null">
+        #{hRoomno,jdbcType=VARCHAR},
+      </if>
+      <if test="hAcreage != null">
+        #{hAcreage,jdbcType=VARCHAR},
+      </if>
+      <if test="hDirection != null">
+        #{hDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="hFitment != null">
+        #{hFitment,jdbcType=VARCHAR},
+      </if>
+      <if test="hIsdoubleair != null">
+        #{hIsdoubleair,jdbcType=BIT},
+      </if>
+      <if test="hLimit != null">
+        #{hLimit,jdbcType=INTEGER},
+      </if>
+      <if test="hFacility != null">
+        #{hFacility,jdbcType=VARCHAR},
+      </if>
+      <if test="hPrice != null">
+        #{hPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="hStatus != null">
+        #{hStatus,jdbcType=INTEGER},
+      </if>
+      <if test="hImg != null">
+        #{hImg,jdbcType=VARCHAR},
+      </if>
+      <if test="hAddress != null">
+        #{hAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hAddtime != null">
+        #{hAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hUpdatetime != null">
+        #{hUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lsg.model.HouseExample" resultType="java.lang.Long">
+    select count(*) from house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update house
+    <set>
+      <if test="record.hId != null">
+        h_id = #{record.hId,jdbcType=INTEGER},
+      </if>
+      <if test="record.hArea != null">
+        h_area = #{record.hArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hEstate != null">
+        h_estate = #{record.hEstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hUnitnumber != null">
+        h_unitNumber = #{record.hUnitnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hFloor != null">
+        h_floor = #{record.hFloor,jdbcType=INTEGER},
+      </if>
+      <if test="record.hRoomno != null">
+        h_roomNo = #{record.hRoomno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hAcreage != null">
+        h_acreage = #{record.hAcreage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hDirection != null">
+        h_direction = #{record.hDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hFitment != null">
+        h_fitment = #{record.hFitment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hIsdoubleair != null">
+        h_isDoubleAir = #{record.hIsdoubleair,jdbcType=BIT},
+      </if>
+      <if test="record.hLimit != null">
+        h_limit = #{record.hLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.hFacility != null">
+        h_facility = #{record.hFacility,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hPrice != null">
+        h_price = #{record.hPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hStatus != null">
+        h_status = #{record.hStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.hImg != null">
+        h_img = #{record.hImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hAddress != null">
+        h_address = #{record.hAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hAddtime != null">
+        h_addtime = #{record.hAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.hUpdatetime != null">
+        h_updateTime = #{record.hUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update house
+    set h_id = #{record.hId,jdbcType=INTEGER},
+      h_area = #{record.hArea,jdbcType=VARCHAR},
+      h_estate = #{record.hEstate,jdbcType=VARCHAR},
+      h_unitNumber = #{record.hUnitnumber,jdbcType=VARCHAR},
+      h_floor = #{record.hFloor,jdbcType=INTEGER},
+      h_roomNo = #{record.hRoomno,jdbcType=VARCHAR},
+      h_acreage = #{record.hAcreage,jdbcType=VARCHAR},
+      h_direction = #{record.hDirection,jdbcType=VARCHAR},
+      h_fitment = #{record.hFitment,jdbcType=VARCHAR},
+      h_isDoubleAir = #{record.hIsdoubleair,jdbcType=BIT},
+      h_limit = #{record.hLimit,jdbcType=INTEGER},
+      h_facility = #{record.hFacility,jdbcType=VARCHAR},
+      h_price = #{record.hPrice,jdbcType=DOUBLE},
+      h_status = #{record.hStatus,jdbcType=INTEGER},
+      h_img = #{record.hImg,jdbcType=VARCHAR},
+      h_address = #{record.hAddress,jdbcType=VARCHAR},
+      h_addtime = #{record.hAddtime,jdbcType=TIMESTAMP},
+      h_updateTime = #{record.hUpdatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lsg.model.House">
+    update house
+    <set>
+      <if test="hArea != null">
+        h_area = #{hArea,jdbcType=VARCHAR},
+      </if>
+      <if test="hEstate != null">
+        h_estate = #{hEstate,jdbcType=VARCHAR},
+      </if>
+      <if test="hUnitnumber != null">
+        h_unitNumber = #{hUnitnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="hFloor != null">
+        h_floor = #{hFloor,jdbcType=INTEGER},
+      </if>
+      <if test="hRoomno != null">
+        h_roomNo = #{hRoomno,jdbcType=VARCHAR},
+      </if>
+      <if test="hAcreage != null">
+        h_acreage = #{hAcreage,jdbcType=VARCHAR},
+      </if>
+      <if test="hDirection != null">
+        h_direction = #{hDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="hFitment != null">
+        h_fitment = #{hFitment,jdbcType=VARCHAR},
+      </if>
+      <if test="hIsdoubleair != null">
+        h_isDoubleAir = #{hIsdoubleair,jdbcType=BIT},
+      </if>
+      <if test="hLimit != null">
+        h_limit = #{hLimit,jdbcType=INTEGER},
+      </if>
+      <if test="hFacility != null">
+        h_facility = #{hFacility,jdbcType=VARCHAR},
+      </if>
+      <if test="hPrice != null">
+        h_price = #{hPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="hStatus != null">
+        h_status = #{hStatus,jdbcType=INTEGER},
+      </if>
+      <if test="hImg != null">
+        h_img = #{hImg,jdbcType=VARCHAR},
+      </if>
+      <if test="hAddress != null">
+        h_address = #{hAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hAddtime != null">
+        h_addtime = #{hAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hUpdatetime != null">
+        h_updateTime = #{hUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where h_id = #{hId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lsg.model.House">
+    update house
+    set h_area = #{hArea,jdbcType=VARCHAR},
+      h_estate = #{hEstate,jdbcType=VARCHAR},
+      h_unitNumber = #{hUnitnumber,jdbcType=VARCHAR},
+      h_floor = #{hFloor,jdbcType=INTEGER},
+      h_roomNo = #{hRoomno,jdbcType=VARCHAR},
+      h_acreage = #{hAcreage,jdbcType=VARCHAR},
+      h_direction = #{hDirection,jdbcType=VARCHAR},
+      h_fitment = #{hFitment,jdbcType=VARCHAR},
+      h_isDoubleAir = #{hIsdoubleair,jdbcType=BIT},
+      h_limit = #{hLimit,jdbcType=INTEGER},
+      h_facility = #{hFacility,jdbcType=VARCHAR},
+      h_price = #{hPrice,jdbcType=DOUBLE},
+      h_status = #{hStatus,jdbcType=INTEGER},
+      h_img = #{hImg,jdbcType=VARCHAR},
+      h_address = #{hAddress,jdbcType=VARCHAR},
+      h_addtime = #{hAddtime,jdbcType=TIMESTAMP},
+      h_updateTime = #{hUpdatetime,jdbcType=TIMESTAMP}
+    where h_id = #{hId,jdbcType=INTEGER}
+  </update>
+</mapper>

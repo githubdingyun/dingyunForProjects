@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="static/css/bootstrap-table.css">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/bootstrap-editable.css">
+    <link href="static/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-table.js"></script>
+    <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>-->
+    <script type="text/javascript" src="static/js/bootstrap.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-editable.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-table-editable.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="static/js/bootstrap-datetimepicker.js"></script>
+
+</head>
+<body>
+<p>X-editable: submit via PUT method</p>
+<div style="margin: 150px">
+    <a href="#" id="username">awesome</a>
+    <p>Hello World</p>
+</div>
+</body>
+<script type="text/javascript">
+    $('#username').editable({
+        type: 'text',
+        url: '/post',
+        pk: 1,
+        title: 'Enter username',
+        ajaxOptions: {
+            type: 'put'
+        }
+    });
+
+    //ajax emulation
+    $.mockjax({
+        url: '/post',
+        responseTime: 200,
+        response: function(settings) {
+            console.log(settings);
+        }
+    });
+
+</script>
+</html>

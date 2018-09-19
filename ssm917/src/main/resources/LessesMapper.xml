@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingyun.dao.LesseeDao">
+
+    <resultMap id="map" type="com.dingyun.entry.Lessee">
+        <id column="l_addtime" property="lAddtime" jdbcType="INTEGER"/>
+        <result column="l_id" property="lId" jdbcType="VARCHAR"/>
+        <result column="l_idcard" property="lIdcard" jdbcType="VARCHAR"/>
+        <result column="i_name" property="lName" jdbcType="VARCHAR"/>
+        <result column="inativeplace" property="lNativeplace" jdbcType="VARCHAR"/>
+        <result column="l_sex" property="lSex" jdbcType="INTEGER"/>
+        <result column="l_tel" property="lTel" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="findAll" resultMap="map">
+        select * from lessee
+    </select>
+    <insert id="addOne" parameterType="com.dingyun.entry.Lessee">
+          insert into lessee values (#{lId},#{lName},#{lTel},#{lSex},#{lNativeolace},#{lIdcard},#{lAddtime})
+    </insert>
+    <update id="updataById" parameterType="">
+        update lessee
+        <set >
+            <if test="lId != null" >
+                l_id = #{lId,jdbcType=VARCHAR},
+            </if>
+            <if test="adminPasswod != null" >
+                admin_passwod = #{adminPasswod,jdbcType=VARCHAR},
+            </if>
+            <if test="adminRemark != null" >
+                admin_remark = #{adminRemark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where l_id = #{adminId,jdbcType=INTEGER}
+
+    </update>
+    <delete id="deleteById" parameterType="">
+      delete from lessee where l_id = #{}
+    </delete>
+    <select id="selectById" parameterType="" resultMap="map" >
+select * from lessee where l_id = #{}
+    </select>
+
+</mapper>

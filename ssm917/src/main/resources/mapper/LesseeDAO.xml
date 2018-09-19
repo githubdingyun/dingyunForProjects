@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsg.dao.LesseeDAO">
+  <resultMap id="BaseResultMap" type="com.lsg.model.Lessee">
+    <id column="l_id" jdbcType="INTEGER" property="lId" />
+    <result column="l_name" jdbcType="VARCHAR" property="lName" />
+    <result column="l_tel" jdbcType="VARCHAR" property="lTel" />
+    <result column="l_sex" jdbcType="CHAR" property="lSex" />
+    <result column="l_nativeplace" jdbcType="VARCHAR" property="lNativeplace" />
+    <result column="l_idcard" jdbcType="VARCHAR" property="lIdcard" />
+    <result column="l_addtime" jdbcType="TIMESTAMP" property="lAddtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    l_id, l_name, l_tel, l_sex, l_nativeplace, l_idcard, l_addtime
+  </sql>
+  <select id="selectByExample" parameterType="com.lsg.model.LesseeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lessee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lessee
+    where l_id = #{lId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lessee
+    where l_id = #{lId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lsg.model.LesseeExample">
+    delete from lessee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lsg.model.Lessee">
+    insert into lessee (l_id, l_name, l_tel, 
+      l_sex, l_nativeplace, l_idcard, 
+      l_addtime)
+    values (#{lId,jdbcType=INTEGER}, #{lName,jdbcType=VARCHAR}, #{lTel,jdbcType=VARCHAR}, 
+      #{lSex,jdbcType=CHAR}, #{lNativeplace,jdbcType=VARCHAR}, #{lIdcard,jdbcType=VARCHAR}, 
+      #{lAddtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lsg.model.Lessee">
+    insert into lessee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lId != null">
+        l_id,
+      </if>
+      <if test="lName != null">
+        l_name,
+      </if>
+      <if test="lTel != null">
+        l_tel,
+      </if>
+      <if test="lSex != null">
+        l_sex,
+      </if>
+      <if test="lNativeplace != null">
+        l_nativeplace,
+      </if>
+      <if test="lIdcard != null">
+        l_idcard,
+      </if>
+      <if test="lAddtime != null">
+        l_addtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lId != null">
+        #{lId,jdbcType=INTEGER},
+      </if>
+      <if test="lName != null">
+        #{lName,jdbcType=VARCHAR},
+      </if>
+      <if test="lTel != null">
+        #{lTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lSex != null">
+        #{lSex,jdbcType=CHAR},
+      </if>
+      <if test="lNativeplace != null">
+        #{lNativeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="lIdcard != null">
+        #{lIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="lAddtime != null">
+        #{lAddtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lsg.model.LesseeExample" resultType="java.lang.Long">
+    select count(*) from lessee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update lessee
+    <set>
+      <if test="record.lId != null">
+        l_id = #{record.lId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lName != null">
+        l_name = #{record.lName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lTel != null">
+        l_tel = #{record.lTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lSex != null">
+        l_sex = #{record.lSex,jdbcType=CHAR},
+      </if>
+      <if test="record.lNativeplace != null">
+        l_nativeplace = #{record.lNativeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lIdcard != null">
+        l_idcard = #{record.lIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lAddtime != null">
+        l_addtime = #{record.lAddtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update lessee
+    set l_id = #{record.lId,jdbcType=INTEGER},
+      l_name = #{record.lName,jdbcType=VARCHAR},
+      l_tel = #{record.lTel,jdbcType=VARCHAR},
+      l_sex = #{record.lSex,jdbcType=CHAR},
+      l_nativeplace = #{record.lNativeplace,jdbcType=VARCHAR},
+      l_idcard = #{record.lIdcard,jdbcType=VARCHAR},
+      l_addtime = #{record.lAddtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lsg.model.Lessee">
+    update lessee
+    <set>
+      <if test="lName != null">
+        l_name = #{lName,jdbcType=VARCHAR},
+      </if>
+      <if test="lTel != null">
+        l_tel = #{lTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lSex != null">
+        l_sex = #{lSex,jdbcType=CHAR},
+      </if>
+      <if test="lNativeplace != null">
+        l_nativeplace = #{lNativeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="lIdcard != null">
+        l_idcard = #{lIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="lAddtime != null">
+        l_addtime = #{lAddtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where l_id = #{lId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lsg.model.Lessee">
+    update lessee
+    set l_name = #{lName,jdbcType=VARCHAR},
+      l_tel = #{lTel,jdbcType=VARCHAR},
+      l_sex = #{lSex,jdbcType=CHAR},
+      l_nativeplace = #{lNativeplace,jdbcType=VARCHAR},
+      l_idcard = #{lIdcard,jdbcType=VARCHAR},
+      l_addtime = #{lAddtime,jdbcType=TIMESTAMP}
+    where l_id = #{lId,jdbcType=INTEGER}
+  </update>
+</mapper>

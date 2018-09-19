@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/SS/">
+    <title>房屋管理系统 - 登录页面</title>
+    <link rel="stylesheet" href="static/css/index.css">
+    <!--<link rel="stylesheet" href="static/css/jquery.css">-->
+    <!--<link rel="stylesheet" href="static/css/bootstrap.css">-->
+</head>
+<body>
+<p th:text="${#httpServletRequest.getPathInfo()}"></p>
+<div class="login">
+    <img src="static/image/logo.png" alt="智游">
+    <p>房屋管理系统</p>
+    <form id="from-get" action="User/userLogin" method="post" onsubmit="">
+        <div>
+            <input type="text" id="uUsername" name="name" value="" placeholder="请输入用户名">
+        </div>
+        <div>
+            <input type="password" id="uPassword" name="password" value="" placeholder="请输入密码">
+        </div>
+        <div id="" class="form-inline">
+            <label for="yzm"></label><input name="yzm" id="yzm" style="width: 45%; display: inline-block;" type="text">
+            <div id="v_container" style="width: 45%; height: 40px; float: right;">
+            </div>
+        </div>
+        <div>
+            <p class="error-message" id="err"></p>
+            <input id="submit" type="submit" style="" value="登录">
+        </div>
+
+        <div>
+            <label>
+                <input id="color" type="color" name="color">
+            </label>
+        </div>
+    </form>
+</div>
+<!--<script type="text/javascript" src="static/js/bootstrap.js"></script>-->
+<script type="text/javascript" src="static/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="static/js/gVerify.js"></script>
+<!--<script type="text/javascript" src="static/js/index.js"></script>-->
+
+<script type="text/javascript">
+    $(function () {
+        verifyCode = new GVerify("v_container");
+
+        $("#yzm").blur(function () {
+            yzm = $("#yzm").val();
+            if (!verifyCode.validate(yzm)) {
+                $("#from-get").attr("onsubmit","false");
+                var a = $("#from-get").attr("onsubmit");
+                $("#err").text("验证码错误"+a);
+
+            } else {
+                $("#err").text("");
+            }
+        })
+    })
+</script>
+</body>
+</html>
